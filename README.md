@@ -59,6 +59,32 @@ Open **`http://127.0.0.1:8000`** in your browser.
 
 ---
 
+## ☁️ Cloud Deployment (Render.com — Free Tier)
+
+This project ships a [`render.yaml`](render.yaml) for one-click deployment to [Render.com](https://render.com) (free tier).
+
+### Steps to Deploy
+1. **Fork** this repository to your GitHub account (or push your clone).
+2. Go to [render.com](https://render.com) → **New → Web Service** and connect your repository.
+3. Render auto-detects `render.yaml` and pre-fills build/start commands.
+4. In **Environment**, confirm `SECRET_KEY` is set (Render generates it automatically via `render.yaml`).
+5. Click **Create Web Service** → Render builds and deploys.
+
+### Environment Variables (pre-configured in `render.yaml`)
+| Variable | Value | Purpose |
+| :--- | :--- | :--- |
+| `SECRET_KEY` | *(auto-generated)* | FastAPI session signing key |
+| `DISABLE_SQLALCHEMY_CEXT` | `1` | Force SQLAlchemy pure-Python mode |
+| `PYTHONPATH` | `src:.` | Python package resolution |
+| `OPENBLAS_NUM_THREADS` / `OMP_NUM_THREADS` | `1` | Prevent OOM on 512 MB free tier |
+
+### ⚠️ Free Tier Constraints
+- **SQLite database resets on every restart** (ephemeral disk on free tier). Pre-seeded demo data will be re-initialised from scratch; no user-submitted data persists across deploys. For persistence, upgrade to a paid Render plan or migrate to PostgreSQL.
+- The service **spins down after 15 minutes of inactivity**. The first request after spin-down may take 30–60 seconds.
+- `demo_video.mp4` is not included in the repository (203 MB — too large for GitHub). Host it on YouTube or Google Drive and link it here once published.
+
+---
+
 ## 🔑 Pre-Seeded Evaluation Credentials
 
 Test accounts are pre-configured to evaluate all Role-Based Access Control (RBAC) workflows:

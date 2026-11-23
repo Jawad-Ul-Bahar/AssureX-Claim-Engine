@@ -1,7 +1,11 @@
-# AssureX Claim Engine - Enterprise Dependencies
+# AssureX Claim Engine — Production Dependencies for Render.com
+# Dev/test tools (pytest, httpx) are intentionally excluded to minimise
+# build time and RAM usage on Render's free tier (512 MB).
+# To run tests locally, install extras: pip install pytest>=8.0.0 httpx>=0.27.0
+
 # Core Web Framework
 fastapi>=0.110.0
-uvicorn[standard]>=0.28.0
+uvicorn>=0.28.0
 starlette>=0.36.0
 jinja2>=3.1.0
 python-multipart>=0.0.9
@@ -23,7 +27,3 @@ pillow>=10.0.0
 
 # Document & OCR Processing
 pymupdf>=1.23.0
-
-# Testing & Verification
-pytest>=8.0.0
-httpx>=0.27.0

@@ -1,0 +1,39 @@
+# render.yaml — Render.com Infrastructure-as-Code
+# Free Tier Web Service for AssureX Claim Engine
+# https://github.com/Jawad-Ul-Bahar/AssureX-Claim-Engine
+#
+# IMPORTANT — Free tier notes:
+#   • SQLite database is EPHEMERAL: data resets on every restart/deploy.
+#   • The service spins down after 15 min of inactivity; first request
+#     after spin-down may take 30-60 s.
+#   • For persistent data, upgrade to a paid Render plan or migrate to
+#     PostgreSQL (adjust database.py accordingly).
+
+services:
+  - type: web
+    name: assurex-claim-engine
+    runtime: python
+    plan: free
+    rootDir: 02 Source Repository
+    buildCommand: pip install --no-cache-dir -r requirements.txt
+    startCommand: python launch.py
+    envVars:
+      # Suppress SQLAlchemy Cython extension (avoids binary compatibility issues)
+      - key: DISABLE_SQLALCHEMY_CEXT
+        value: "1"
+      # Limit BLAS / OpenMP threads to prevent OOM on 512 MB free tier
+      - key: OPENBLAS_NUM_THREADS
+        value: "1"
+      - key: OMP_NUM_THREADS
+        value: "1"
+      - key: MKL_NUM_THREADS
+        value: "1"
+      # Silence TensorFlow startup spam (Keras model loading)
+      - key: TF_CPP_MIN_LOG_LEVEL
+        value: "2"
+      # FastAPI / Starlette session signing key — auto-generated per service
+      - key: SECRET_KEY
+        generateValue: true
+      # Python module resolution: src/ is the package root
+      - key: PYTHONPATH
+        value: "src:."

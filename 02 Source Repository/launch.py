@@ -48,8 +48,22 @@ def free_port(port=8000):
         pass
 
 if __name__ == '__main__':
-    free_port(8000)
-    if '--no-browser' not in sys.argv:
+    # Detect cloud / CI environment (Render sets RENDER=true automatically)
+    is_cloud = bool(os.environ.get('RENDER') or os.environ.get('CI'))
+
+    # Bind host: cloud needs 0.0.0.0; local defaults to loopback for security
+    host = os.environ.get('HOST', '0.0.0.0' if is_cloud else '127.0.0.1')
+
+    # Port: Render injects $PORT; fall back to 8000 locally
+    port = int(os.environ.get('PORT', 8000))
+
+    # Free the local port only on Windows / local runs
+    if not is_cloud:
+        free_port(port)
+
+    # Open browser only for local runs where --no-browser is not passed
+    if not is_cloud and '--no-browser' not in sys.argv:
         threading.Thread(target=open_when_ready, daemon=True).start()
+
     import uvicorn
-    uvicorn.run('assurex_claim_engine.web.app:app', host='127.0.0.1', port=8000)
+    uvicorn.run('assurex_claim_engine.web.app:app', host=host, port=port)

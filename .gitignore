@@ -1,0 +1,88 @@
+# =====================================================================
+# AssureX Claim Engine - Comprehensive Git Ignore
+# =====================================================================
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+.runtime/
+
+# Python Bytecode, Build, and Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+*.pyo
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+htmlcov/
+
+# Large Media & Demonstration Videos (>10MB / GitHub limits)
+13 Demonstration Video/demo_video.mp4
+13 Demonstration Video/*.mp4
+13 Demonstration Video/*.mov
+13 Demonstration Video/*.avi
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.wmv
+
+# Local Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+.demo_secret
+*.pem
+*.key
+*.cert
+*.crt
+
+# IDE, Editor & Agent Local Folders
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.antigravity/
+.system_generated/
+
+# OS Junk & Metadata
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Runtime Logs & Temporary Scratch Files
+*.log
+scratch/
